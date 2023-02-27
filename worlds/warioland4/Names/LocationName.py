@@ -48,8 +48,8 @@ class Level(typing.NamedTuple):
     def jewels_only(cls, name):
         return cls._with_cd_health(name, None, None)
     
-    def default_locations(self):
-        return [*self.jewels, self.cd_box, self.fullhealth]
+    def locations(self):
+        return filter(None, (*self.jewels, self.cd_box, self.fullhealth))
 
 
 # Entry Passage

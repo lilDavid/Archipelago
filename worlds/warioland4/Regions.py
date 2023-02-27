@@ -15,13 +15,13 @@ def create_regions(world: MultiWorld, player: int):
         world,
         player,
         RegionName.hall_of_hieroglyphs,
-        [*LocationName.hall_of_hieroglyphs.jewels, LocationName.hall_of_hieroglyphs.fullhealth],
+        LocationName.hall_of_hieroglyphs.locations(),
     )
     spoiled_rotten = create_region(
         world,
         player,
         RegionName.spoiled_rotten,
-        (LocationName.spoiled_rotten,),
+        [LocationName.spoiled_rotten],
     )
 
     emerald_passage = create_region(world, player, RegionName.emerald_passage)
@@ -29,31 +29,31 @@ def create_regions(world: MultiWorld, player: int):
         world,
         player,
         RegionName.palm_tree_paradise,
-        LocationName.palm_tree_paradise.default_locations(),
+        LocationName.palm_tree_paradise.locations(),
     )
     wildflower_fields = create_region(
         world,
         player,
         RegionName.wildflower_fields,
-        LocationName.wildflower_fields.default_locations(),
+        LocationName.wildflower_fields.locations(),
     )
     mystic_lake = create_region(
         world,
         player,
         RegionName.mystic_lake,
-        LocationName.mystic_lake.default_locations(),
+        LocationName.mystic_lake.locations(),
     )
     monsoon_jungle = create_region(
         world,
         player,
         RegionName.monsoon_jungle,
-        LocationName.monsoon_jungle.default_locations(),
+        LocationName.monsoon_jungle.locations(),
     )
     cractus = create_region(
         world,
         player,
         RegionName.cractus,
-        (LocationName.cractus,),
+        [LocationName.cractus],
     )
 
     ruby_passage = create_region(world, player, RegionName.ruby_passage)
@@ -61,31 +61,31 @@ def create_regions(world: MultiWorld, player: int):
         world,
         player,
         RegionName.curious_factory,
-        LocationName.curious_factory.default_locations(),
+        LocationName.curious_factory.locations(),
     )
     toxic_landfill = create_region(
         world,
         player,
         RegionName.toxic_landfill,
-        LocationName.toxic_landfill.default_locations(),
+        LocationName.toxic_landfill.locations(),
     )
     forty_below_fridge = create_region(
         world,
         player,
         RegionName.forty_below_fridge,
-        LocationName.forty_below_fridge.default_locations(),
+        LocationName.forty_below_fridge.locations(),
     )
     pinball_zone = create_region(
         world,
         player,
         RegionName.pinball_zone,
-        LocationName.pinball_zone.default_locations(),
+        LocationName.pinball_zone.locations(),
     )
     cuckoo_condor = create_region(
         world,
         player,
         RegionName.cuckoo_condor,
-        (LocationName.cuckoo_condor,),
+        [LocationName.cuckoo_condor],
     )
 
     topaz_passage = create_region(world, player, RegionName.topaz_passage)
@@ -93,31 +93,31 @@ def create_regions(world: MultiWorld, player: int):
         world,
         player,
         RegionName.toy_block_tower,
-        LocationName.toy_block_tower.default_locations(),
+        LocationName.toy_block_tower.locations(),
     )
     big_board = create_region(
         world,
         player,
         RegionName.big_board,
-        LocationName.big_board.default_locations(),
+        LocationName.big_board.locations(),
     )
     doodle_woods = create_region(
         world,
         player,
         RegionName.doodle_woods,
-        LocationName.doodle_woods.default_locations(),
+        LocationName.doodle_woods.locations(),
     )
     domino_row = create_region(
         world,
         player,
         RegionName.domino_row,
-        LocationName.domino_row.default_locations(),
+        LocationName.domino_row.locations(),
     )
     aerodent = create_region(
         world,
         player,
         RegionName.aerodent,
-        (LocationName.aerodent,),
+        [LocationName.aerodent],
     )
 
     sapphire_passage = create_region(world, player, RegionName.sapphire_passage)
@@ -125,31 +125,31 @@ def create_regions(world: MultiWorld, player: int):
         world,
         player,
         RegionName.crescent_moon_village,
-        LocationName.crescent_moon_village.default_locations(),
+        LocationName.crescent_moon_village.locations(),
     )
     arabian_night = create_region(
         world,
         player,
         RegionName.arabian_night,
-        LocationName.arabian_night.default_locations(),
+        LocationName.arabian_night.locations(),
     )
     fiery_cavern = create_region(
         world,
         player,
         RegionName.fiery_cavern,
-        LocationName.fiery_cavern.default_locations(),
+        LocationName.fiery_cavern.locations(),
     )
     hotel_horror = create_region(
         world,
         player,
         RegionName.hotel_horror,
-        LocationName.hotel_horror.default_locations(),
+        LocationName.hotel_horror.locations(),
     )
     catbat = create_region(
         world,
         player,
         RegionName.catbat,
-        (LocationName.catbat,),
+        [LocationName.catbat],
     )
 
     golden_pyramid = create_region(world, player, RegionName.golden_pyramid)
@@ -163,7 +163,7 @@ def create_regions(world: MultiWorld, player: int):
         world,
         player,
         RegionName.golden_diva,
-        (LocationName.golden_diva,),
+        [LocationName.golden_diva],
     )
 
     world.regions += [
@@ -208,7 +208,7 @@ def connect_regions(world, player):
     connect(world, player, names, "Menu", RegionName.entry_passage)
     connect(world, player, names, RegionName.entry_passage, RegionName.hall_of_hieroglyphs)
     connect(world, player, names, RegionName.hall_of_hieroglyphs, RegionName.spoiled_rotten,
-        lambda state: all(state.has(piece, player) for piece in ItemName.entry_passage_jewel))
+        lambda state: state.wl4_has_full_jewels(player, ItemName.entry_passage_jewel, 1))
     connect(world, player, names, RegionName.spoiled_rotten, RegionName.map)
 
     connect(world, player, names, RegionName.map, RegionName.emerald_passage)
@@ -217,7 +217,7 @@ def connect_regions(world, player):
     connect(world, player, names, RegionName.wildflower_fields, RegionName.mystic_lake)
     connect(world, player, names, RegionName.mystic_lake, RegionName.monsoon_jungle)
     connect(world, player, names, RegionName.monsoon_jungle, RegionName.cractus,
-        lambda state: all(state.has(piece, player, 4) for piece in ItemName.emerald_passage_jewel))
+        lambda state: state.wl4_has_full_jewels(player, ItemName.emerald_passage_jewel, 4))
 
     connect(world, player, names, RegionName.map, RegionName.ruby_passage)
     connect(world, player, names, RegionName.ruby_passage, RegionName.curious_factory)
@@ -225,7 +225,7 @@ def connect_regions(world, player):
     connect(world, player, names, RegionName.toxic_landfill, RegionName.forty_below_fridge)
     connect(world, player, names, RegionName.forty_below_fridge, RegionName.pinball_zone)
     connect(world, player, names, RegionName.pinball_zone, RegionName.cuckoo_condor,
-        lambda state: all(state.has(piece, player, 4) for piece in ItemName.ruby_passage_jewel))
+        lambda state: state.wl4_has_full_jewels(player, ItemName.ruby_passage_jewel, 4))
 
     connect(world, player, names, RegionName.map, RegionName.topaz_passage)
     connect(world, player, names, RegionName.topaz_passage, RegionName.toy_block_tower)
@@ -233,7 +233,7 @@ def connect_regions(world, player):
     connect(world, player, names, RegionName.big_board, RegionName.doodle_woods)
     connect(world, player, names, RegionName.doodle_woods, RegionName.domino_row)
     connect(world, player, names, RegionName.domino_row, RegionName.aerodent,
-        lambda state: all(state.has(piece, player, 4) for piece in ItemName.topaz_passage_jewel))
+        lambda state: state.wl4_has_full_jewels(player, ItemName.topaz_passage_jewel, 4))
 
     connect(world, player, names, RegionName.map, RegionName.sapphire_passage)
     connect(world, player, names, RegionName.sapphire_passage, RegionName.crescent_moon_village)
@@ -241,13 +241,13 @@ def connect_regions(world, player):
     connect(world, player, names, RegionName.arabian_night, RegionName.fiery_cavern)
     connect(world, player, names, RegionName.fiery_cavern, RegionName.hotel_horror)
     connect(world, player, names, RegionName.hotel_horror, RegionName.catbat,
-        lambda state: all(state.has(piece, player, 4) for piece in ItemName.sapphire_passage_jewel))
+        lambda state: state.wl4_has_full_jewels(player, ItemName.sapphire_passage_jewel, 4))
 
     connect(world, player, names, RegionName.map, RegionName.golden_pyramid,
         lambda state: (state.has(ItemName.defeated_boss, player, 5)))
     connect(world, player, names, RegionName.golden_pyramid, RegionName.golden_passage)
     connect(world, player, names, RegionName.golden_passage, RegionName.golden_diva,
-        lambda state: all(state.has(piece, player) for piece in ItemName.golden_pyramid_jewel))
+        lambda state: state.wl4_has_full_jewels(player, ItemName.golden_pyramid_jewel, 1))
 
 
 def create_region(

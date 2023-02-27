@@ -26,7 +26,7 @@ topaz_passage = "Topaz Passage"
 toy_block_tower = "Toy Block Tower"
 big_board = "The Big Board"
 doodle_woods = "Doodle Woods"
-domino_row = "Dominow Row"
+domino_row = "Domino Row"
 aerodent = "Aerodent"
 
 # Sapphire Passage

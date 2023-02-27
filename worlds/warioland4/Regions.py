@@ -209,7 +209,8 @@ def connect_regions(world, player):
     connect(world, player, names, RegionName.entry_passage, RegionName.hall_of_hieroglyphs)
     connect(world, player, names, RegionName.hall_of_hieroglyphs, RegionName.spoiled_rotten,
         lambda state: state.wl4_has_full_jewels(player, ItemName.entry_passage_jewel, 1))
-    connect(world, player, names, RegionName.spoiled_rotten, RegionName.map)
+    connect(world, player, names, "Menu", RegionName.map,
+        lambda state: state.has(ItemName.defeated_boss, player))
 
     connect(world, player, names, RegionName.map, RegionName.emerald_passage)
     connect(world, player, names, RegionName.emerald_passage, RegionName.palm_tree_paradise)

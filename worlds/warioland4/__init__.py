@@ -1,24 +1,41 @@
 import typing
 
-from BaseClasses import Item, ItemClassification
-
-from .Items import WarioLand4Item, item_table
-from .Options import wario_land_4_options
-from .Regions import connect_regions, create_regions
-from .Locations import all_locations, setup_locations
-from .Names import ItemName, LocationName
+from BaseClasses import Item, ItemClassification, Tutorial
 from worlds.AutoWorld import WebWorld, World
 
+from .Items import WarioLand4Item, item_table
+from .Locations import all_locations, setup_locations
+from .Logic import WarioLand4Logic
+from .Names import ItemName, LocationName
+from .Options import wario_land_4_options
+from .Regions import connect_regions, create_regions
+
+
+class WarioLand4Web(WebWorld):
+    theme = "grass"
+
+    setup_en = Tutorial(
+        "Multiworld Setup Guide",
+        "A guide to setting up the Wario Land 4 randomizer connected to an Archipelago Multiworld.",
+        "English",
+        "setup_en.md",
+        "setup/en",
+        ["lil David"]
+    )
+    
+    tutorials = [setup_en]
 
 class WarioLand4World(World):
     game: str = "Wario Land 4"
     option_definitions = wario_land_4_options
-    topology_present = True
+    topology_present = False
 
     data_version = 0
 
     item_name_to_id = {name: data.code for name, data in item_table.items()}
     location_name_to_id = all_locations
+
+    web = WarioLand4Web()
 
     def generate_basic(self) -> None:
         itempool: typing.List[WarioLand4Item] = []
@@ -54,6 +71,8 @@ class WarioLand4World(World):
         ).place_locked_item(self.create_event(ItemName.victory))
 
         self.multiworld.itempool += itempool
+
+        self.multiworld.completion_condition[self.player] = lambda state: state.has(ItemName.victory, self.player)
     
     def generate_output(self, output_directory: str):
         # TODO

@@ -143,12 +143,12 @@ box_location_table = {
 }
 
 boss_location_table = {
-	LocationName.spoiled_rotten.defeat(): None,
-	LocationName.cractus.defeat(): None,
-	LocationName.cuckoo_condor.defeat(): None,
-	LocationName.aerodent.defeat(): None,
-	LocationName.catbat.defeat(): None,
-	LocationName.golden_diva.defeat(): None,
+	LocationName.spoiled_rotten: None,
+	LocationName.cractus: None,
+	LocationName.cuckoo_condor: None,
+	LocationName.aerodent: None,
+	LocationName.catbat: None,
+	LocationName.golden_diva: None,
 }
 
 # Unused for now

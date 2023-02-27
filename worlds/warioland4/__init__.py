@@ -25,8 +25,6 @@ class WarioLand4World(World):
 
         connect_regions(self.multiworld, self.player)
 
-        #print(self.multiworld.get_locations())
-
         diamond_pieces = 18 * 4
         cds = 16
         full_health_items = 17
@@ -37,23 +35,23 @@ class WarioLand4World(World):
                 itempool.append(self.create_item(item))
 
         junk_count = total_required_locations - len(itempool)
-        assert junk_count == 0, f"Mismatch location counts: {junk_count} empty checks"
-
-        self.multiworld.get_location(
-            LocationName.golden_diva.defeat(), self.player
-        ).place_locked_item(self.create_event(ItemName.victory))
+        assert junk_count == 0, f"Mismatched location counts: {junk_count} empty checks"
 
         boss_location_names = [
-            LocationName.spoiled_rotten.defeat(),
-            LocationName.cractus.defeat(),
-            LocationName.cuckoo_condor.defeat(),
-            LocationName.aerodent.defeat(),
-            LocationName.catbat.defeat(),
+            LocationName.spoiled_rotten,
+            LocationName.cractus,
+            LocationName.cuckoo_condor,
+            LocationName.aerodent,
+            LocationName.catbat,
         ]
         for location_name in boss_location_names:
             self.multiworld.get_location(location_name, self.player).place_locked_item(
                 self.create_event(ItemName.defeated_boss)
             )
+
+        self.multiworld.get_location(
+            LocationName.golden_diva, self.player
+        ).place_locked_item(self.create_event(ItemName.victory))
 
         self.multiworld.itempool += itempool
     

@@ -2,7 +2,7 @@ import typing
 
 from BaseClasses import MultiWorld, Region, Entrance
 
-from .Locations import WarioLand4Location, all_locations
+from .Locations import WL4Location, all_locations
 from .Names import LocationName, ItemName, RegionName
 
 
@@ -257,7 +257,7 @@ def create_region(
     region = Region(name, player, world)
     for location in locations:
         id = all_locations[location]
-        region.locations.append(WarioLand4Location(player, location, id, region))
+        region.locations.append(WL4Location(player, location, id, region))
     return region
 
 

@@ -1,4 +1,4 @@
 from test.TestBase import WorldTestBase
 
-class WarioLand4TestBase(WorldTestBase):
+class WL4TestBase(WorldTestBase):
 	game = "Wario Land 4"

@@ -1,13 +1,13 @@
 import itertools
 
-from . import WarioLand4TestBase
+from . import WL4TestBase
 from ..Names import LocationName, ItemName
 
 
 # I don't fully understand how these tests work so I'm reasonably sure these
 # aren't thorough enough. Then again, WL4's progression is pretty simple.
 
-class TestAccess(WarioLand4TestBase):
+class TestAccess(WL4TestBase):
     def test_spoiled_rotten(self):
         """Test access to Spoiled Rotten"""
         locations = [LocationName.spoiled_rotten]

@@ -3,15 +3,15 @@ import typing
 from BaseClasses import Item, ItemClassification, Tutorial
 from worlds.AutoWorld import WebWorld, World
 
-from .Items import WarioLand4Item, item_table
+from .Items import WL4Item, item_table
 from .Locations import all_locations, setup_locations
-from .Logic import WarioLand4Logic
+from .Logic import WL4Logic
 from .Names import ItemName, LocationName
-from .Options import wario_land_4_options
+from .Options import wl4_options
 from .Regions import connect_regions, create_regions
 
 
-class WarioLand4Web(WebWorld):
+class WL4Web(WebWorld):
     theme = "grass"
 
     setup_en = Tutorial(
@@ -25,9 +25,9 @@ class WarioLand4Web(WebWorld):
     
     tutorials = [setup_en]
 
-class WarioLand4World(World):
+class WL4World(World):
     game: str = "Wario Land 4"
-    option_definitions = wario_land_4_options
+    option_definitions = wl4_options
     topology_present = False
 
     data_version = 0
@@ -35,10 +35,10 @@ class WarioLand4World(World):
     item_name_to_id = {name: data.code for name, data in item_table.items()}
     location_name_to_id = all_locations
 
-    web = WarioLand4Web()
+    web = WL4Web()
 
     def generate_basic(self) -> None:
-        itempool: typing.List[WarioLand4Item] = []
+        itempool: typing.List[WL4Item] = []
 
         connect_regions(self.multiworld, self.player)
 
@@ -92,9 +92,9 @@ class WarioLand4World(World):
         else:
             classification = ItemClassification.filler
 
-        created_item = WarioLand4Item(name, classification, data.code, self.player)
+        created_item = WL4Item(name, classification, data.code, self.player)
 
         return created_item
     
     def create_event(self, name: str):
-        return WarioLand4Item(name, ItemClassification.progression, None, self.player)
+        return WL4Item(name, ItemClassification.progression, None, self.player)

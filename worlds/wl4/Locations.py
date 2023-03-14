@@ -4,7 +4,7 @@ from BaseClasses import Location
 
 from .Names import LocationName
 
-class WarioLand4Location(Location):
+class WL4Location(Location):
 	game: str = "Wario Land 4"
 
 	def __init__(self, player: int, name: str, address: typing.Optional[int], parent):

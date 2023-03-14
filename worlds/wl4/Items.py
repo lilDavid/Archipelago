@@ -5,7 +5,7 @@ from BaseClasses import Item
 from .Names import ItemName
 
 
-class WarioLand4Item(Item):
+class WL4Item(Item):
     game: str = "Wario Land 4"
 
 

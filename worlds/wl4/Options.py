@@ -30,7 +30,7 @@ class MusicShuffle(Choice):
 	default = 0
 
 
-wario_land_4_options: typing.Dict[str, type(Option)] = {
+wl4_options: typing.Dict[str, type(Option)] = {
 	"death_link": DeathLink
 	# "keyzer": Keysanity
 	# "music_shuffle": MusicShuffle

@@ -145,6 +145,10 @@ wargroove_options:
   # This is used by the Wargroove client, so it knows where to send communication files to
   root_directory: "C:/Program Files (x86)/Steam/steamapps/common/Wargroove"
 
+wl4_options:
+  # File name of the Wario Land 4 NA/EU ROM
+  rom_file: "Wario Land 4 (UE) [!].gba"
+
 zillion_options:
   # File name of the Zillion US rom
   rom_file: "Zillion (UE) [!].sms"

@@ -25,8 +25,8 @@ local level_status_table = gba_wram_start + 0xA68
 local high_scores = gba_wram_start + 0xB10
 
 -- these two together control the game's overall state
-local scene_addr = gba_wram_start + 0xC3A
-local scene_state_addr = gba_wram_start + 0xC3C
+local game_mode_addr = gba_wram_start + 0xC3A
+local game_state_addr = gba_wram_start + 0xC3C
 
 local wario_health_addr = gba_wram_start + 0x1910
 
@@ -417,12 +417,12 @@ end
 
 -- Reading game state
 local function get_current_game_mode()
-    return memory.read_u8(scene_addr), memory.read_u8(scene_state_addr)
+    return memory.read_u8(game_mode_addr), memory.read_u8(game_state_addr)
 end
 
 function InSafeState()
-    local scene, state = get_current_game_mode()
-    return (scene == 1 or scene == 2) and state == 2
+    local mode, state = get_current_game_mode()
+    return (mode == 1 or mode == 2) and state == 2
 end
 
 function item_receivable()
@@ -442,10 +442,10 @@ function deathlink_enabled()
 end
 
 function get_death_state()
-    local scene, _ = get_current_game_mode()
+    local mode, _ = get_current_game_mode()
     
     -- Wario is in a level if he's in scene 2, else he can't really be dead
-    if scene ~= 2 then return false end
+    if mode ~= 2 then return false end
 
     local hp_counter = memory.read_u8(wario_health_addr)
     return (hp_counter == 0)
@@ -458,8 +458,8 @@ end
 local game_complete = false
 
 local is_game_complete = function()
-    scene, status = get_current_game_mode()
-    if scene ~= 1 and scene ~= 2 then
+    mode, status = get_current_game_mode()
+    if mode ~= 1 and mode ~= 2 then
         return game_complete
     end
 

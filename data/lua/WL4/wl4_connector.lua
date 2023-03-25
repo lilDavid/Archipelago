@@ -3,7 +3,7 @@ local json = require('json')
 local math = require('math')
 
 
-local last_modified_date = '2023-03-23' -- Should be the last modified date
+local last_modified_date = '2023-03-24' -- Should be the last modified date
 local script_version = 0
 
 
@@ -31,10 +31,11 @@ local game_state_addr = gba_wram_start + 0xC3C
 local wario_health_addr = gba_wram_start + 0x1910
 
 -- mod stuff
+local received_item_count_addr = gba_wram_start + 0xA76
+
 local vanilla_unused_offset = gba_wram_start + 0x6280
 
 local incoming_item_addr = vanilla_unused_offset + 1
-local received_item_count_addr = vanilla_unused_offset + 2
 local death_link_addr = vanilla_unused_offset + 4
 
 local player_name_addr = gba_rom_start + 0x78F97C
@@ -491,7 +492,10 @@ function process_block(block)
     if received_items_count < #item_queue then
         -- There are items to send: remember lua tables are 1-indexed!
         if item_receivable() then
-            memory.write_u8(incoming_item_addr, item_queue[received_items_count+1])
+            memory.write_u8(
+                incoming_item_addr,
+                bit.bor(item_queue[received_items_count+1], 0x80)
+            )
         end
     end
 end

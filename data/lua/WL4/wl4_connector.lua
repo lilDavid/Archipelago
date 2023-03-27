@@ -30,13 +30,15 @@ local game_state_addr = gba_wram_start + 0xC3C
 
 local wario_health_addr = gba_wram_start + 0x1910
 
+local wario_stop_flag = gba_wram_start + 0x19F6
+
 -- mod stuff
 local received_item_count_addr = gba_wram_start + 0xA76
 
 local vanilla_unused_offset = gba_wram_start + 0x6280
 
 local incoming_item_addr = vanilla_unused_offset + 1
-local death_link_addr = vanilla_unused_offset + 4
+local death_link_addr = vanilla_unused_offset + 2
 
 local player_name_addr = gba_rom_start + 0x78F97C
 
@@ -423,7 +425,13 @@ end
 
 function InSafeState()
     local mode, state = get_current_game_mode()
-    return (mode == 1 or mode == 2) and state == 2
+    if mode == 2 then
+        wario_stopped = memory.read_u16_le(wario_stop_flag) ~= 0
+        wario_dying = memory.read_u8(wario_health_addr) == 0
+        return state == 2 and (wario_dying or not wario_stopped)
+    else
+        return mode == 1 and state == 2
+    end
 end
 
 function item_receivable()
@@ -444,8 +452,7 @@ end
 
 function get_death_state()
     local mode, _ = get_current_game_mode()
-    
-    -- Wario is in a level if he's in scene 2, else he can't really be dead
+    -- Wario is in a level if he's in mode 2, else he can't really be dead
     if mode ~= 2 then return false end
 
     local hp_counter = memory.read_u8(wario_health_addr)
@@ -466,8 +473,8 @@ local is_game_complete = function()
 
     if game_complete then return true end
     local golden_diva_defeated = false
-    local status_bits = memory.read_u8(0x3000AF0)
-    golden_diva_defeated = bit.check(status_bits, 1)
+    local status_bits = memory.read_u32_le(0x3000AF0)
+    golden_diva_defeated = status_bits == 0x10
 
     if (golden_diva_defeated) then
         game_complete = true

@@ -3,7 +3,7 @@ local json = require('json')
 local math = require('math')
 
 
-local last_modified_date = '2023-03-24' -- Should be the last modified date
+local last_modified_date = '2023-03-29' -- Should be the last modified date
 local script_version = 0
 
 
@@ -38,7 +38,7 @@ local received_item_count_addr = gba_wram_start + 0xA76
 local vanilla_unused_offset = gba_wram_start + 0x6280
 
 local incoming_item_addr = vanilla_unused_offset + 1
-local death_link_addr = vanilla_unused_offset + 2
+local death_link_addr = vanilla_unused_offset + 8
 
 local player_name_addr = gba_rom_start + 0x78F97C
 

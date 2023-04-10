@@ -425,19 +425,16 @@ end
 
 function InSafeState()
     local mode, state = get_current_game_mode()
-    if mode == 2 then
-        wario_stopped = memory.read_u16_le(wario_stop_flag) ~= 0
-        wario_dying = memory.read_u8(wario_health_addr) == 0
-        return state == 2 and (wario_dying or not wario_stopped)
-    else
-        return mode == 1 and state == 2
-    end
+    return (mode == 1 or mode == 2) and state == 2
 end
 
 function item_receivable()
-    local itemQueued = memory.read_u8(incoming_item_addr)
-    -- Safe to receive an item if the scene is normal and no item is already queued
-    return InSafeState() and itemQueued == 0 
+    local mode, state = get_current_game_mode()
+    local inLevel = mode == 2 and state == 2
+    local warioStopped = inLevel and memory.read_u16_le(wario_stop_flag) ~= 0
+    local itemQueued = memory.read_u8(incoming_item_addr) ~= 0
+    -- Safe to receive an item if the scene is normal, Wario can move, and no item is already queued
+    return InSafeState() and not (warioStopped or itemQueued)
 end
 
 function get_player_name()

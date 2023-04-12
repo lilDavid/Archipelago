@@ -3,7 +3,7 @@ local json = require('json')
 local math = require('math')
 
 
-local last_modified_date = '2023-03-29' -- Should be the last modified date
+local last_modified_date = '2023-04-12' -- Should be the last modified date
 local script_version = 0
 
 
@@ -38,6 +38,7 @@ local received_item_count_addr = gba_wram_start + 0xA76
 local vanilla_unused_offset = gba_wram_start + 0x6280
 
 local incoming_item_addr = vanilla_unused_offset + 1
+local incoming_player_addr = vanilla_unused_offset + 2
 local death_link_addr = vanilla_unused_offset + 8
 
 local player_name_addr = gba_rom_start + 0x78F97C
@@ -432,7 +433,7 @@ function item_receivable()
     local mode, state = get_current_game_mode()
     local inLevel = mode == 2 and state == 2
     local warioStopped = inLevel and memory.read_u16_le(wario_stop_flag) ~= 0
-    local itemQueued = memory.read_u8(incoming_item_addr) ~= 0
+    local itemQueued = memory.read_s8(incoming_player_addr) ~= -1 
     -- Safe to receive an item if the scene is normal, Wario can move, and no item is already queued
     return InSafeState() and not (warioStopped or itemQueued)
 end
@@ -496,10 +497,8 @@ function process_block(block)
     if received_items_count < #item_queue then
         -- There are items to send: remember lua tables are 1-indexed!
         if item_receivable() then
-            memory.write_u8(
-                incoming_item_addr,
-                bit.bor(item_queue[received_items_count+1], 0x80)
-            )
+            memory.write_u8(incoming_player_addr, 0x00)
+            memory.write_u8(incoming_item_addr, item_queue[received_items_count+1])
         end
     end
 end

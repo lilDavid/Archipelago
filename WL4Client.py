@@ -19,10 +19,10 @@ from worlds.wl4.Rom import get_base_rom_path
 
 SYSTEM_MESSAGE_ID = 0
 
-CONNECTION_TIMING_OUT_STATUS = "Connection timing out. Please restart your emulator, then restart wl4_connector.lua"
+CONNECTION_TIMING_OUT_STATUS = "Connection timing out. Please restart your emulator, then restart connector_wl4.lua"
 CONNECTION_REFUSED_STATUS = \
-    "Connection refused. Please start your emulator and make sure wl4_connector.lua is running"
-CONNECTION_RESET_STATUS = "Connection was reset. Please restart your emulator, then restart wl4_connector.lua"
+    "Connection refused. Please start your emulator and make sure connector_wl4.lua is running"
+CONNECTION_RESET_STATUS = "Connection was reset. Please restart your emulator, then restart connector_wl4.lua"
 CONNECTION_TENTATIVE_STATUS = "Initial Connection Made"
 CONNECTION_CONNECTED_STATUS = "Connected"
 CONNECTION_INITIAL_STATUS = "Connection has not been initiated"

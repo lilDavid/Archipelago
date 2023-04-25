@@ -1,9 +1,9 @@
 local socket = require("socket")
 local json = require('json')
-local math = require('math')
+require('common')
 
 
-local last_modified_date = '2023-04-12' -- Should be the last modified date
+local last_modified_date = '2023-04-25' -- Should be the last modified date
 local script_version = 0
 
 
@@ -42,285 +42,6 @@ local incoming_player_addr = vanilla_unused_offset + 2
 local death_link_addr = vanilla_unused_offset + 8
 
 local player_name_addr = gba_rom_start + 0x78F97C
-
--- convenience functions
-
--- invert a table (assumes values are unique)
-local function invert_table(t)
-    local inverted = {}
-    for key,val in pairs(t) do
-        inverted[val] = key
-    end
-    return inverted
-end
-
--- a Layout describes how a section of memory is laid out
--- getting a specific data type should return its value,
--- getting a rescursive structure will return the structure with the layout (this is the default behavior)
-local Layout = {
-    rawget = function(pointer) return pointer.get(pointer) end,
-    get = function(pointer) return pointer end,
-    set = function(pointer, value) end
-}
-function Layout:create (l)
-    setmetatable(l, self)
-    self.__index = self
-    return l
-end
-
--- a Layout_Entry gives an offset within the Layout and, recursively, a Layout of memory at that offset
-local function Layout_Entry(offset, layout)
-    return { offset = offset, layout = layout }
-end
-
-local e = Layout_Entry
-
--- Pointer holds an absolute offset, and has a Layout as its type
-local Pointer = {}
-function Pointer:new (offset, layout)
-    local p = { offset = offset, layout = layout }
-    setmetatable(p, Pointer)
-    return p
-end
-function Pointer:cast(layout)
-    return Pointer:new(self.offset, layout)
-end
-function Pointer:rawget(key)
-    if not self.layout[key] then
-        return self.layout.rawget(self)
-    end
-    -- get the struct at this entry
-    local inner = self.layout[key]
-    -- update get the new offset and layout
-    local offset = self.offset + inner.offset
-    local layout = inner.layout
-    -- create a new pointer
-    return Pointer:new(offset, layout)
-end
-function Pointer:get() return self.layout.get(self) end
-function Pointer:set(value) return self.layout.set(self, value) end
-function Pointer.__index(pointer, key)
-    if Pointer[key] then
-        return Pointer[key]
-    end
-    -- get the pointer
-    local p = pointer:rawget(key)
-    -- resolve the pointer (if the layout is not concrete, it resolves to itself)
-    return p:get()
-end
-function Pointer.__newindex(pointer, key, value)
-    -- get the pointer
-    local p = pointer:rawget(key)
-    -- resolve the pointer (if the layout is not concrete, it resolves to itself)
-    p:set(value)
-end
-
--- CONCRETE TYPES
-
--- Int has a width in bytes to read
-local function Int(width)
-    local obj = Layout:create {}
-
-    local gets = {
-        [1] = function(p)return mainmemory.read_u8(p.offset) end,
-        [2] = function(p) return mainmemory.read_u16_be(p.offset) end,
-        [3] = function(p) return mainmemory.read_u24_be(p.offset) end,
-        [4] = function(p) return mainmemory.read_u32_be(p.offset) end,
-    }
-    obj.get = gets[width]
-
-    local sets = {
-        [1] = function(p, value) mainmemory.write_u8(p.offset, value) end,
-        [2] = function(p, value) mainmemory.write_u16_be(p.offset, value) end,
-        [3] = function(p, value) mainmemory.write_u24_be(p.offset, value) end,
-        [4] = function(p, value) mainmemory.write_u32_be(p.offset, value) end,
-    }
-    obj.set = sets[width]
-
-    return obj
-end
-
--- alias for types to save space by not creating them multiple times
-local Int_8 = Int(1)
-local Int_16 = Int(2)
-local Int_24 = Int(3)
-local Int_32 = Int(4)
-
--- Bit is a single flag at an address
--- values passed in and returned are booleans
-local function Bit(pos)
-    local obj = Layout:create {}
-
-    function obj.get(p)
-        return bit.check(mainmemory.read_u8(p.offset), pos)
-    end
-
-    function obj.set(p, value)
-        local orig = mainmemory.readbyte(p.offset)
-        local changed
-        if value then
-            changed = bit.set(orig, pos)
-        else
-            changed = bit.clear(orig, pos)
-        end
-        mainmemory.writebyte(p.offset, changed)
-    end
-
-    return obj
-end
-
--- Bits is an int that is some mask of bits at the address
--- the range of bit positions is inclusive
-local function Bits(start, ending)
-    local obj = Layout:create {}
-
-    local mask = 0x00
-    for b = start, ending do
-        mask = bit.set(mask, b)
-    end
-
-    function obj.get(p)
-        return bit.rshift( bit.band(mainmemory.read_u8(p.offset), mask), start )
-    end
-
-    function obj.set(p, value)
-        local orig = mainmemory.readbyte(p.offset)
-        orig = bit.band( orig, bit.bnot(mask) )
-        mainmemory.writebyte(p.offset, bit.bor(bit.lshift(value, start), orig) )
-    end
-
-    return obj
-end
-
-local function Value_Named_Layout(layout, lookup)
-    local obj = Layout:create {}
-
-    obj.lookup = lookup
-
-    function obj.get(p)
-        local value = layout.get(p)
-        if lookup[value] then
-            value = lookup[value]
-        end
-        return value
-    end
-
-    function obj.rawget(p)
-        return layout.get(p)
-    end
-
-    local inverse_lookup = invert_table(lookup)
-
-    function obj.set(p, value)
-        if type(value) == "string" then
-            if inverse_lookup[value] then
-                value = inverse_lookup[value]
-            else
-                return
-            end
-        end
-        layout.set(p, value)
-    end
-
-    return obj
-end
-
--- RECURSIVE TYPES
-
--- holds a list of layouts of a given type, that can be indexed into
--- the Array can be given a list of names for each key to be used as an alternative lookup
-local function Array(width, layout, keys)
-    local obj = Layout:create {}
-
-    obj.keys = keys
-
-    setmetatable(obj, {
-        __index = function(array, key)
-            -- allows us to still call get and set
-            if Layout[key] then
-                return Layout[key]
-            end
-            -- compute the offset from the start of the array
-            if type(key) == "string" then
-                if keys[key] then
-                    key = keys[key]
-                else
-                    key = 0
-                end
-            end
-            local offset = key * width
-            -- since this is a layout, we are expected to return a layout entry
-            return Layout_Entry( offset, layout )
-        end
-    })
-
-    return obj
-end
-
--- holds a list of bit flags
--- the Bit_Array can be given a list of names for each key to be used as an alternative lookup
-local function Bit_Array(bytes, keys)
-    local obj = Layout:create {}
-
-    obj.keys = keys
-
-    setmetatable(obj, {
-        __index = function(array, key)
-            -- allows us to still call get and set
-            if Layout[key] then
-                return Layout[key]
-            end
-            -- compute the offset from the start of the array
-            if type(key) == "string" then
-                if keys[key] then
-                    key = keys[key]
-                else
-                    key = 0
-                end
-            end
-            local byte = bytes - math.floor(key / 8) - 1
-            local bit = key % 8
-            -- since this is a layout, we are expected to return a layout entry
-            return Layout_Entry( byte, Bit(bit) )
-        end
-    })
-
-    return obj
-end
-
--- a pointer to a specific location in memory
-local function Address(layout)
-    local obj = Layout:create {}
-
-    function obj.get(p)
-        -- get the address
-        local address = Int_32.get(p)
-        address = bit.band(address, 0x00FFFFFF)
-        -- return "Null" for address 0
-        if address == 0 then
-            return "Null"
-        end
-        -- create a pointer to it
-        return Pointer:new( address, layout )
-    end
-
-    function obj.set(p, value)
-        -- Null a pointer
-        if value == "Null" then
-            Int_32.set(p, 0)
-            return
-        end
-        -- assume this is a Pointer
-        if type(value) == "table" then
-            value = value.offset
-        end
-        -- create address
-        local address =  bit.bor(value, 0x80000000)
-        Int_32.set(p, address)
-    end
-
-    return obj
-end
 
 
 local level_checks = function(level_name, passage, level)
@@ -407,7 +128,6 @@ local curstate =  STATE_UNINITIALIZED
 local wl4Socket = nil
 local frame = 0
 
--- Various useful values
 local bytes_to_string = function(bytes)
     local string = ''
     for i=0,#(bytes) do
@@ -416,8 +136,6 @@ local bytes_to_string = function(bytes)
     end
     return string
 end
-
--- ROM reading and writing functions
 
 -- Reading game state
 local function get_current_game_mode()
@@ -550,8 +268,7 @@ function receive()
 end
 
 function main()
-    if (is23Or24Or25 or is26To27) == false then
-        print("Must use a version of bizhawk 2.3.1 or higher")
+    if not checkBizhawkVersion() then
         return
     end
     server, error = socket.bind('localhost', 28922)
@@ -575,7 +292,7 @@ function main()
                     wl4Socket = client
                     wl4Socket:settimeout(0)
                 else
-                    print('Connection failed, ensure WL4Client is running and rerun wl4_connector.lua')
+                    print('Connection failed, ensure WL4Client is running and rerun connector_wl4.lua')
                     return
                 end
             end

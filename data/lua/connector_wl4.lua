@@ -38,8 +38,9 @@ local received_item_count_addr = gba_wram_start + 0xA76
 local vanilla_unused_offset = gba_wram_start + 0x6280
 
 local incoming_item_addr = gba_wram_start + 0x6281
-local incoming_player_addr = gba_wram_start + 0x6282
-local death_link_addr = gba_wram_start + 0x6295
+local incoming_item_exists_addr = gba_wram_start + 0x6282
+local incoming_player_addr = gba_wram_start + 0x6283
+local death_link_addr = gba_wram_start + 0x6296
 
 local player_name_addr = gba_rom_start + 0x78F97C
 
@@ -197,7 +198,7 @@ function item_receivable()
     local mode, state = get_current_game_mode()
     local inLevel = mode == 2 and state == 2
     local warioStopped = inLevel and memory.read_u16_le(wario_stop_flag) ~= 0
-    local itemQueued = memory.read_u8(incoming_player_addr) ~= 0xFE 
+    local itemQueued = memory.read_u8(incoming_item_exists_addr) ~= 0x00 
     -- Safe to receive an item if the scene is normal, Wario can move, and no item is already queued
     return InSafeState() and not (warioStopped or itemQueued)
 end
@@ -264,7 +265,12 @@ function process_block(block)
         -- There are items to send: remember lua tables are 1-indexed!
         if item_receivable() then
             local player_id = sender_queue[received_items_count+1]
-            local player_name = name_list[player_id]
+            local player_name
+            if player_id == 0 then
+                player_name = "Archipelago"
+            else
+                player_name = name_list[player_id]
+            end
             local encoded_name = string_to_wl4_bytes(player_name)
             for i = 17, #encoded_name do
                 table.remove(encoded_name, i)
@@ -272,6 +278,7 @@ function process_block(block)
             table.insert(encoded_name, 0xFE)
             memory.write_bytes_as_array(incoming_player_addr, encoded_name)
             memory.write_u8(incoming_item_addr, item_queue[received_items_count+1])
+            memory.write_u8(incoming_item_exists_addr, 1)
         end
     end
 end

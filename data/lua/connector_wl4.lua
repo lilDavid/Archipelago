@@ -174,13 +174,9 @@ end
 local string_to_wl4_bytes = function(msg)
     local bytes = {}
     for i = 1, #msg do
-        -- Find the longest match
-        match = ''
-        for ext = 0, 2 do
-            local utf = msg:sub(i, i+ext)
-            local wario = char_map[utf]
-            if wario ~= nil then match = wario end
-        end
+        local utf = msg:sub(i, i)
+        local match = char_map[utf]
+        if match == nil then match = 0xFF end
         
         table.insert(bytes, match)
     end

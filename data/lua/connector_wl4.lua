@@ -3,7 +3,7 @@ local json = require('json')
 require('common')
 
 
-local last_modified_date = '2023-07-13' -- Should be the last modified date
+local last_modified_date = '2023-07-24' -- Should be the last modified date
 local script_version = 0
 
 
@@ -330,7 +330,7 @@ function receive()
 end
 
 function main()
-    if not checkBizhawkVersion() then
+    if not checkBizHawkVersion() then
         return
     end
     server, error = socket.bind('localhost', 28922)

@@ -45,7 +45,7 @@ Payload: client -> lua
 }
 
 Deathlink logic:
-"Dead" is true <-> Link is at 0 hp.
+"Dead" is true <-> Wario is at 0 hp.
 
 deathlink_pending: we need to kill the player
 deathlink_sent_this_death: we interacted with the multiworld on this death,
@@ -143,6 +143,7 @@ def get_payload(ctx: WL4Context):
     
     payload = json.dumps({
         "items": [get_item_value(item.item) for item in ctx.items_received],
+        "senders": [item.player for item in ctx.items_received],
         "playerNames": [name for (i, name) in ctx.player_names.items() if i != 0],
         "triggerDeath": trigger_death,
     })

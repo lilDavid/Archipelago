@@ -15,7 +15,7 @@ from CommonClient import CommonContext, server_loop, gui_enabled, \
     ClientCommandProcessor, logger, get_base_parser
 import Utils
 from worlds import network_data_package
-from worlds.wl4.Rom import get_base_rom_path
+from worlds.wl4.rom import get_base_rom_path
 
 SYSTEM_MESSAGE_ID = 0
 

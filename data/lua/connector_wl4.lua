@@ -78,78 +78,14 @@ local char_map = {
     [']']=0xf0, ['℃']=0xf1, ['-']=0xf2, [' ']=0xff,
 }
 
+local status_words = function()
+    local status_address = level_status_table
+    local status_words = {}
+    for i = 0, 36 do
+        table.insert(status_words, memory.read_u32_le(status_address + 4 * i))
+    end
 
-local level_checks = function(level_name, passage, level)
-    local status_address = level_status_table + 24 * passage + 4 * level
-    local status_bits = memory.read_u8(status_address + 1)
-
-    local checks = {}
-    checks[level_name .. " Jewel Piece Box (Top Right)"] = bit.check(status_bits, 0)
-    checks[level_name .. " Jewel Piece Box (Bottom Right)"] = bit.check(status_bits, 1)
-    checks[level_name .. " Jewel Piece Box (Bottom Left)"] = bit.check(status_bits, 2)
-    checks[level_name .. " Jewel Piece Box (Top Left)"] = bit.check(status_bits, 3)
-    checks[level_name .. " CD Box"] = bit.check(status_bits, 4)
-    checks[level_name .. " Full Health Item Box"] = bit.check(status_bits, 6)
-    return checks
-end
-
-local entry_passage_checks = function()
-    local checks = {}
-    for k, v in pairs(level_checks("Hall of Hieroglyphs", 0, 0)) do checks[k] = v end
-    return checks
-end
-
-local emerald_passage_checks = function()
-    local checks = {}
-    for k, v in pairs(level_checks("Palm Tree Paradise", 1, 0)) do checks[k] = v end
-    for k, v in pairs(level_checks("Wildflower Fields", 1, 1)) do checks[k] = v end
-    for k, v in pairs(level_checks("Mystic Lake", 1, 2)) do checks[k] = v end
-    for k, v in pairs(level_checks("Monsoon Jungle", 1, 3)) do checks[k] = v end
-    return checks
-end
-
-local ruby_passage_checks = function()
-    local checks = {}
-    for k, v in pairs(level_checks("The Curious Factory", 2, 0)) do checks[k] = v end
-    for k, v in pairs(level_checks("The Toxic Landfill", 2, 1)) do checks[k] = v end
-    for k, v in pairs(level_checks("40 Below Fridge", 2, 2)) do checks[k] = v end
-    for k, v in pairs(level_checks("Pinball Zone", 2, 3)) do checks[k] = v end
-    return checks
-end
-
-local topaz_passage_checks = function()
-    local checks = {}
-    for k, v in pairs(level_checks("Toy Block Tower", 3, 0)) do checks[k] = v end
-    for k, v in pairs(level_checks("The Big Board", 3, 1)) do checks[k] = v end
-    for k, v in pairs(level_checks("Doodle Woods", 3, 2)) do checks[k] = v end
-    for k, v in pairs(level_checks("Domino Row", 3, 3)) do checks[k] = v end
-    return checks
-end
-
-local sapphire_passage_checks = function()
-    local checks = {}
-    for k, v in pairs(level_checks("Crescent Moon Village", 4, 0)) do checks[k] = v end
-    for k, v in pairs(level_checks("Arabian Night", 4, 1)) do checks[k] = v end
-    for k, v in pairs(level_checks("Fiery Cavern", 4, 2)) do checks[k] = v end
-    for k, v in pairs(level_checks("Hotel Horror", 4, 3)) do checks[k] = v end
-    return checks
-end
-
-local golden_pyramid_checks = function()
-    local checks = {}
-    for k, v in pairs(level_checks("Golden Passage", 5, 0)) do checks[k] = v end
-    return checks
-end
-
-local check_all_locations = function()
-    local location_checks = {}
-    for k, v in pairs(entry_passage_checks()) do location_checks[k] = v end
-    for k, v in pairs(emerald_passage_checks()) do location_checks[k] = v end
-    for k, v in pairs(ruby_passage_checks()) do location_checks[k] = v end
-    for k, v in pairs(topaz_passage_checks()) do location_checks[k] = v end
-    for k, v in pairs(sapphire_passage_checks()) do location_checks[k] = v end
-    for k, v in pairs(golden_pyramid_checks()) do location_checks[k] = v end
-    return location_checks
+    return status_words
 end
 
 
@@ -310,7 +246,7 @@ function receive()
     retTable["scriptVersion"] = script_version
     retTable["deathlinkActive"] = deathlink_enabled()
     if InSafeState() then
-        retTable["locations"] = check_all_locations()
+        retTable["itemStatus"] = status_words()
         retTable["isDead"] = get_death_state()
         retTable["gameComplete"] = is_game_complete()
     end

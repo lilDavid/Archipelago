@@ -3,7 +3,7 @@ local json = require('json')
 require('common')
 
 
-local last_modified_date = '2023-07-24' -- Should be the last modified date
+local last_modified_date = '2023-08-27' -- Should be the last modified date
 local script_version = 0
 
 
@@ -15,9 +15,9 @@ local gba_rom_start = 0x08000000
 -- least to most significant: jewel pieces 1234, cd, keyzer
 -- X = vanilla save data / AP obtained items
 -- Y = AP checked locations
--- 
+--
 -- entries congruent 4 mod 6 represent boss rooms
--- - 0x00000008 = door open 
+-- - 0x00000008 = door open
 -- - 0x00000020 = boss defeated
 local level_status_table = gba_wram_start + 0xA68
 
@@ -114,7 +114,7 @@ local string_to_wl4_bytes = function(msg)
         local utf = msg:sub(i, i)
         local match = char_map[utf]
         if match == nil then match = 0xFF end
-        
+
         table.insert(bytes, match)
     end
     return bytes
@@ -140,7 +140,7 @@ function item_receivable()
 end
 
 function get_player_name()
-    local name_bytes = memory.readbyterange(player_name_addr, 16)
+    local name_bytes = memory.readbyterange(player_name_addr, 64)
     return utf8_bytes_to_string(name_bytes)
 end
 

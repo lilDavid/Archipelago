@@ -51,50 +51,50 @@ Name: "playing"; Description: "Installation for playing purposes"
 Name: "custom"; Description: "Custom installation"; Flags: iscustom
 
 [Components]
-Name: "core";             Description: "Core Files"; Types: full hosting playing custom; Flags: fixed
-Name: "generator";        Description: "Generator"; Types: full hosting
-Name: "generator/sm";     Description: "Super Metroid ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 3145728; Flags: disablenouninstallwarning
-Name: "generator/dkc3";   Description: "Donkey Kong Country 3 ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 3145728; Flags: disablenouninstallwarning
-Name: "generator/smw";    Description: "Super Mario World ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 3145728; Flags: disablenouninstallwarning
-Name: "generator/soe";    Description: "Secret of Evermore ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 3145728; Flags: disablenouninstallwarning
-Name: "generator/l2ac";   Description: "Lufia II Ancient Cave ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 2621440; Flags: disablenouninstallwarning
-Name: "generator/lttp";   Description: "A Link to the Past ROM Setup and Enemizer"; Types: full hosting; ExtraDiskSpaceRequired: 5191680
-Name: "generator/oot";    Description: "Ocarina of Time ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 100663296; Flags: disablenouninstallwarning
-Name: "generator/zl";     Description: "Zillion ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 150000; Flags: disablenouninstallwarning
-Name: "generator/pkmn_r"; Description: "Pokemon Red ROM Setup"; Types: full hosting
-Name: "generator/pkmn_b"; Description: "Pokemon Blue ROM Setup"; Types: full hosting
-Name: "generator/mmbn3";  Description: "MegaMan Battle Network 3"; Types: full hosting; ExtraDiskSpaceRequired: 8388608; Flags: disablenouninstallwarning
-Name: "generator/ladx";   Description: "Link's Awakening DX ROM Setup"; Types: full hosting
-Name: "generator/tloz";   Description: "The Legend of Zelda ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 135168; Flags: disablenouninstallwarning
-Name: "generator/wl4";    Description: "Wario Land 4 ROM Setup"; Types: full hosting
-Name: "server";           Description: "Server"; Types: full hosting
-Name: "client";           Description: "Clients"; Types: full playing
-Name: "client/sni";       Description: "SNI Client"; Types: full playing
-Name: "client/sni/lttp";  Description: "SNI Client - A Link to the Past Patch Setup"; Types: full playing; Flags: disablenouninstallwarning
-Name: "client/sni/sm";    Description: "SNI Client - Super Metroid Patch Setup"; Types: full playing; Flags: disablenouninstallwarning
-Name: "client/sni/dkc3";  Description: "SNI Client - Donkey Kong Country 3 Patch Setup"; Types: full playing; Flags: disablenouninstallwarning
-Name: "client/sni/smw";   Description: "SNI Client - Super Mario World Patch Setup"; Types: full playing; Flags: disablenouninstallwarning
-Name: "client/sni/l2ac";  Description: "SNI Client - Lufia II Ancient Cave Patch Setup"; Types: full playing; Flags: disablenouninstallwarning
-Name: "client/bizhawk";   Description: "BizHawk Client"; Types: full playing
-Name: "client/factorio";  Description: "Factorio"; Types: full playing
-Name: "client/kh2";       Description: "Kingdom Hearts 2"; Types: full playing
-Name: "client/minecraft"; Description: "Minecraft"; Types: full playing; ExtraDiskSpaceRequired: 226894278
-Name: "client/oot";       Description: "Ocarina of Time"; Types: full playing
-Name: "client/ff1";       Description: "Final Fantasy 1"; Types: full playing
-Name: "client/pkmn";      Description: "Pokemon Client"
-Name: "client/pkmn/red";  Description: "Pokemon Client - Pokemon Red Setup"; Types: full playing; ExtraDiskSpaceRequired: 1048576
-Name: "client/pkmn/blue"; Description: "Pokemon Client - Pokemon Blue Setup"; Types: full playing; ExtraDiskSpaceRequired: 1048576
-Name: "client/mmbn3";     Description: "MegaMan Battle Network 3 Client"; Types: full playing;
-Name: "client/ladx";      Description: "Link's Awakening Client"; Types: full playing; ExtraDiskSpaceRequired: 1048576
-Name: "client/cf";        Description: "ChecksFinder"; Types: full playing
-Name: "client/sc2";       Description: "Starcraft 2"; Types: full playing
-Name: "client/wargroove"; Description: "Wargroove"; Types: full playing
-Name: "client/zl";        Description: "Zillion"; Types: full playing
-Name: "client/tloz";      Description: "The Legend of Zelda"; Types: full playing
-Name: "client/advn";      Description: "Adventure"; Types: full playing
-Name: "client/ut";        Description: "Undertale"; Types: full playing
-Name: "client/wl4";       Description: "Wario Land 4"; Types: full playing
-Name: "client/text";      Description: "Text, to !command and chat"; Types: full playing
+Name: "core";               Description: "Core Files"; Types: full hosting playing custom; Flags: fixed
+Name: "generator";          Description: "Generator"; Types: full hosting
+Name: "generator/sm";       Description: "Super Metroid ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 3145728; Flags: disablenouninstallwarning
+Name: "generator/dkc3";     Description: "Donkey Kong Country 3 ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 3145728; Flags: disablenouninstallwarning
+Name: "generator/smw";      Description: "Super Mario World ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 3145728; Flags: disablenouninstallwarning
+Name: "generator/soe";      Description: "Secret of Evermore ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 3145728; Flags: disablenouninstallwarning
+Name: "generator/l2ac";     Description: "Lufia II Ancient Cave ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 2621440; Flags: disablenouninstallwarning
+Name: "generator/lttp";     Description: "A Link to the Past ROM Setup and Enemizer"; Types: full hosting; ExtraDiskSpaceRequired: 5191680
+Name: "generator/oot";      Description: "Ocarina of Time ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 100663296; Flags: disablenouninstallwarning
+Name: "generator/zl";       Description: "Zillion ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 150000; Flags: disablenouninstallwarning
+Name: "generator/pkmn_r";   Description: "Pokemon Red ROM Setup"; Types: full hosting
+Name: "generator/pkmn_b";   Description: "Pokemon Blue ROM Setup"; Types: full hosting
+Name: "generator/mmbn3";    Description: "MegaMan Battle Network 3"; Types: full hosting; ExtraDiskSpaceRequired: 8388608; Flags: disablenouninstallwarning
+Name: "generator/ladx";     Description: "Link's Awakening DX ROM Setup"; Types: full hosting
+Name: "generator/tloz";     Description: "The Legend of Zelda ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 135168; Flags: disablenouninstallwarning
+Name: "generator/wl4";      Description: "Wario Land 4 ROM Setup"; Types: full hosting, ExtraDiskSpaceRequired: 8388608; Flags: disablenouninstallwarning
+Name: "server";             Description: "Server"; Types: full hosting
+Name: "client";             Description: "Clients"; Types: full playing
+Name: "client/sni";         Description: "SNI Client"; Types: full playing
+Name: "client/sni/lttp";    Description: "SNI Client - A Link to the Past Patch Setup"; Types: full playing; Flags: disablenouninstallwarning
+Name: "client/sni/sm";      Description: "SNI Client - Super Metroid Patch Setup"; Types: full playing; Flags: disablenouninstallwarning
+Name: "client/sni/dkc3";    Description: "SNI Client - Donkey Kong Country 3 Patch Setup"; Types: full playing; Flags: disablenouninstallwarning
+Name: "client/sni/smw";     Description: "SNI Client - Super Mario World Patch Setup"; Types: full playing; Flags: disablenouninstallwarning
+Name: "client/sni/l2ac";    Description: "SNI Client - Lufia II Ancient Cave Patch Setup"; Types: full playing; Flags: disablenouninstallwarning
+Name: "client/bizhawk";     Description: "BizHawk Client"; Types: full playing
+Name: "client/bizhawk/wl4"; Description: "BizHawk Client - Wario Land 4 Patch Setup"; Types: full playing; Flags: disablenouninstallwarning
+Name: "client/factorio";    Description: "Factorio"; Types: full playing
+Name: "client/kh2";         Description: "Kingdom Hearts 2"; Types: full playing
+Name: "client/minecraft";   Description: "Minecraft"; Types: full playing; ExtraDiskSpaceRequired: 226894278
+Name: "client/oot";         Description: "Ocarina of Time"; Types: full playing
+Name: "client/ff1";         Description: "Final Fantasy 1"; Types: full playing
+Name: "client/pkmn";        Description: "Pokemon Client"
+Name: "client/pkmn/red";    Description: "Pokemon Client - Pokemon Red Setup"; Types: full playing; ExtraDiskSpaceRequired: 1048576
+Name: "client/pkmn/blue";   Description: "Pokemon Client - Pokemon Blue Setup"; Types: full playing; ExtraDiskSpaceRequired: 1048576
+Name: "client/mmbn3";       Description: "MegaMan Battle Network 3 Client"; Types: full playing;
+Name: "client/ladx";        Description: "Link's Awakening Client"; Types: full playing; ExtraDiskSpaceRequired: 1048576
+Name: "client/cf";          Description: "ChecksFinder"; Types: full playing
+Name: "client/sc2";         Description: "Starcraft 2"; Types: full playing
+Name: "client/wargroove";   Description: "Wargroove"; Types: full playing
+Name: "client/zl";          Description: "Zillion"; Types: full playing
+Name: "client/tloz";        Description: "The Legend of Zelda"; Types: full playing
+Name: "client/advn";        Description: "Adventure"; Types: full playing
+Name: "client/ut";          Description: "Undertale"; Types: full playing
+Name: "client/text";        Description: "Text, to !command and chat"; Types: full playing
 
 [Dirs]
 NAME: "{app}"; Flags: setntfscompression; Permissions: everyone-modify users-modify authusers-modify;
@@ -114,7 +114,7 @@ Source: "{code:GetBN3ROMPath}"; DestDir: "{app}"; DestName: "Mega Man Battle Net
 Source: "{code:GetLADXROMPath}"; DestDir: "{app}"; DestName: "Legend of Zelda, The - Link's Awakening DX (USA, Europe) (SGB Enhanced).gbc"; Flags: external; Components: client/ladx or generator/ladx
 Source: "{code:GetTLoZROMPath}"; DestDir: "{app}"; DestName: "Legend of Zelda, The (U) (PRG0) [!].nes"; Flags: external; Components: client/tloz or generator/tloz
 Source: "{code:GetAdvnROMPath}"; DestDir: "{app}"; DestName: "ADVNTURE.BIN"; Flags: external; Components: client/advn
-Source: "{code:GetWario4ROMPath}"; DestDir: "{app}"; DestName: "Wario Land 4 (UE) [!].gba"; Flags: external; Components: client/wl4 or generator/wl4
+Source: "{code:GetWario4ROMPath}"; DestDir: "{app}"; DestName: "Wario Land 4 (UE) [!].gba"; Flags: external; Components: client/bizhawk/wl4 or generator/wl4
 Source: "{#source_path}\*"; Excludes: "*.sfc, *.log, data\sprites\alttpr, SNI, EnemizerCLI, Archipelago*.exe"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#source_path}\SNI\*"; Excludes: "*.sfc, *.log"; DestDir: "{app}\SNI"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: client/sni
 Source: "{#source_path}\EnemizerCLI\*"; Excludes: "*.sfc, *.log"; DestDir: "{app}\EnemizerCLI"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: generator/lttp
@@ -143,7 +143,6 @@ Source: "{#source_path}\ArchipelagoWargrooveClient.exe"; DestDir: "{app}"; Flags
 Source: "{#source_path}\ArchipelagoKH2Client.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: client/kh2
 Source: "{#source_path}\ArchipelagoAdventureClient.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: client/advn
 Source: "{#source_path}\ArchipelagoUndertaleClient.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: client/ut
-Source: "{#source_path}\ArchipelagoWL4Client.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: client/wl4
 Source: "vc_redist.x64.exe"; DestDir: {tmp}; Flags: deleteafterinstall
 
 [Icons]
@@ -168,7 +167,6 @@ Name: "{group}\{#MyAppName} Link's Awakening Client"; Filename: "{app}\Archipela
 Name: "{group}\{#MyAppName} Adventure Client"; Filename: "{app}\ArchipelagoAdventureClient.exe"; Components: client/advn
 Name: "{group}\{#MyAppName} Wargroove Client"; Filename: "{app}\ArchipelagoWargrooveClient.exe"; Components: client/wargroove
 Name: "{group}\{#MyAppName} Undertale Client"; Filename: "{app}\ArchipelagoUndertaleClient.exe"; Components: client/ut
-Name: "{group}\{#MyAppName} Wario Land 4 Client"; Filename: "{app}\ArchipelagoWL4Client.exe"; Components: client/wl4
 
 Name: "{commondesktop}\{#MyAppName} Folder"; Filename: "{app}"; Tasks: desktopicon
 Name: "{commondesktop}\{#MyAppName} Launcher"; Filename: "{app}\ArchipelagoLauncher.exe"; Tasks: desktopicon
@@ -292,10 +290,10 @@ Root: HKCR; Subkey: "{#MyAppName}advnpatch";                     ValueData: "Arc
 Root: HKCR; Subkey: "{#MyAppName}advnpatch\DefaultIcon";         ValueData: "{app}\ArchipelagoAdventureClient.exe,0";                           ValueType: string;  ValueName: ""; Components: client/advn
 Root: HKCR; Subkey: "{#MyAppName}advnpatch\shell\open\command";  ValueData: """{app}\ArchipelagoAdventureClient.exe"" ""%1""";                  ValueType: string;  ValueName: ""; Components: client/advn
 
-Root: HKCR; Subkey: ".apwl4";                                    ValueData: "{#MyAppName}wl4patch";           Flags: uninsdeletevalue; ValueType: string;  ValueName: ""; Components: client/wl4
-Root: HKCR; Subkey: "{#MyAppName}wl4patch";                      ValueData: "Archipelago Wario Land 4 Patch"; Flags: uninsdeletekey;   ValueType: string;  ValueName: ""; Components: client/wl4
-Root: HKCR; Subkey: "{#MyAppName}wl4patch\DefaultIcon";          ValueData: "{app}\ArchipelagoWL4Client.exe,0";                        ValueType: string;  ValueName: ""; Components: client/wl4
-Root: HKCR; Subkey: "{#MyAppName}wl4patch\shell\open\command";   ValueData: """{app}\ArchipelagoWL4Client.exe"" ""%1""";               ValueType: string;  ValueName: ""; Components: client/wl4
+Root: HKCR; Subkey: ".apwl4";                                    ValueData: "{#MyAppName}wl4patch";           Flags: uninsdeletevalue; ValueType: string;  ValueName: ""; Components: client/bizhawk
+Root: HKCR; Subkey: "{#MyAppName}wl4patch";                      ValueData: "Archipelago Wario Land 4 Patch"; Flags: uninsdeletekey;   ValueType: string;  ValueName: ""; Components: client/bizhawk
+Root: HKCR; Subkey: "{#MyAppName}wl4patch\DefaultIcon";          ValueData: "{app}\ArchipelagoBizHawkClient.exe,0";                    ValueType: string;  ValueName: ""; Components: client/bizhawk
+Root: HKCR; Subkey: "{#MyAppName}wl4patch\shell\open\command";   ValueData: """{app}\ArchipelagoBizHawkClient.exe"" ""%1""";           ValueType: string;  ValueName: ""; Components: client/bizhawk
 
 Root: HKCR; Subkey: ".archipelago";                              ValueData: "{#MyAppName}multidata";        Flags: uninsdeletevalue; ValueType: string;  ValueName: ""; Components: server
 Root: HKCR; Subkey: "{#MyAppName}multidata";                     ValueData: "Archipelago Server Data";       Flags: uninsdeletekey;  ValueType: string;  ValueName: ""; Components: server
@@ -772,7 +770,7 @@ begin
   else
     Result := '';
  end;
- 
+
 function GetTLoZROMPath(Param: string): string;
 begin
   if Length(tlozrom) > 0 then
@@ -892,7 +890,7 @@ begin
   bn3rom := CheckRom('Mega Man Battle Network 3 - Blue Version (USA).gba','6fe31df0144759b34ad666badaacc442');
   if Length(bn3rom) = 0 then
     BN3ROMFilePage:= AddGBARomPage('Mega Man Battle Network 3 - Blue Version (USA).gba');
-  
+
   ladxrom := CheckRom('Legend of Zelda, The - Link''s Awakening DX (USA, Europe) (SGB Enhanced).gbc','07c211479386825042efb4ad31bb525f');
   if Length(ladxrom) = 0 then
     LADXROMFilePage:= AddGBRomPage('Legend of Zelda, The - Link''s Awakening DX (USA, Europe) (SGB Enhanced).gbc');
@@ -947,5 +945,5 @@ begin
   if (assigned(AdvnROMFilePage)) and (PageID = AdvnROMFilePage.ID) then
     Result := not (WizardIsComponentSelected('client/advn'));
   if (assigned(WL4ROMFilePage)) and (PageID = WL4ROMFilePage.ID) then
-    Result := not (WizardIsComponentSelected('generator/wl4') or WizardIsComponentSelected('client/wl4'));
+    Result := not (WizardIsComponentSelected('client/bizhawk/wl4') or WizardIsComponentSelected('generator/wl4'));
 end;

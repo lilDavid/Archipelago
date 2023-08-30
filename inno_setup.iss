@@ -66,6 +66,7 @@ Name: "generator/pkmn_b"; Description: "Pokemon Blue ROM Setup"; Types: full hos
 Name: "generator/mmbn3";  Description: "MegaMan Battle Network 3"; Types: full hosting; ExtraDiskSpaceRequired: 8388608; Flags: disablenouninstallwarning
 Name: "generator/ladx";   Description: "Link's Awakening DX ROM Setup"; Types: full hosting
 Name: "generator/tloz";   Description: "The Legend of Zelda ROM Setup"; Types: full hosting; ExtraDiskSpaceRequired: 135168; Flags: disablenouninstallwarning
+Name: "generator/wl4";    Description: "Wario Land 4 ROM Setup"; Types: full hosting
 Name: "server";           Description: "Server"; Types: full hosting
 Name: "client";           Description: "Clients"; Types: full playing
 Name: "client/sni";       Description: "SNI Client"; Types: full playing
@@ -91,6 +92,7 @@ Name: "client/zl";        Description: "Zillion"; Types: full playing
 Name: "client/tloz";      Description: "The Legend of Zelda"; Types: full playing
 Name: "client/advn";      Description: "Adventure"; Types: full playing
 Name: "client/ut";        Description: "Undertale"; Types: full playing
+Name: "client/wl4";       Description: "Wario Land 4"; Types: full playing
 Name: "client/text";      Description: "Text, to !command and chat"; Types: full playing
 
 [Dirs]
@@ -111,6 +113,7 @@ Source: "{code:GetBN3ROMPath}"; DestDir: "{app}"; DestName: "Mega Man Battle Net
 Source: "{code:GetLADXROMPath}"; DestDir: "{app}"; DestName: "Legend of Zelda, The - Link's Awakening DX (USA, Europe) (SGB Enhanced).gbc"; Flags: external; Components: client/ladx or generator/ladx
 Source: "{code:GetTLoZROMPath}"; DestDir: "{app}"; DestName: "Legend of Zelda, The (U) (PRG0) [!].nes"; Flags: external; Components: client/tloz or generator/tloz
 Source: "{code:GetAdvnROMPath}"; DestDir: "{app}"; DestName: "ADVNTURE.BIN"; Flags: external; Components: client/advn
+Source: "{code:GetWario4ROMPath}"; DestDir: "{app}"; DestName: "Wario Land 4 (UE) [!].gba"; Flags: external; Components: client/wl4 or generator/wl4
 Source: "{#source_path}\*"; Excludes: "*.sfc, *.log, data\sprites\alttpr, SNI, EnemizerCLI, Archipelago*.exe"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#source_path}\SNI\*"; Excludes: "*.sfc, *.log"; DestDir: "{app}\SNI"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: client/sni
 Source: "{#source_path}\EnemizerCLI\*"; Excludes: "*.sfc, *.log"; DestDir: "{app}\EnemizerCLI"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: generator/lttp
@@ -138,6 +141,7 @@ Source: "{#source_path}\ArchipelagoWargrooveClient.exe"; DestDir: "{app}"; Flags
 Source: "{#source_path}\ArchipelagoKH2Client.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: client/kh2
 Source: "{#source_path}\ArchipelagoAdventureClient.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: client/advn
 Source: "{#source_path}\ArchipelagoUndertaleClient.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: client/ut
+Source: "{#source_path}\ArchipelagoWL4Client.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: client/wl4
 Source: "vc_redist.x64.exe"; DestDir: {tmp}; Flags: deleteafterinstall
 
 [Icons]
@@ -161,6 +165,7 @@ Name: "{group}\{#MyAppName} Link's Awakening Client"; Filename: "{app}\Archipela
 Name: "{group}\{#MyAppName} Adventure Client"; Filename: "{app}\ArchipelagoAdventureClient.exe"; Components: client/advn
 Name: "{group}\{#MyAppName} Wargroove Client"; Filename: "{app}\ArchipelagoWargrooveClient.exe"; Components: client/wargroove
 Name: "{group}\{#MyAppName} Undertale Client"; Filename: "{app}\ArchipelagoUndertaleClient.exe"; Components: client/ut
+Name: "{group}\{#MyAppName} Wario Land 4 Client"; Filename: "{app}\ArchipelagoWL4Client.exe"; Components: client/wl4
 
 Name: "{commondesktop}\{#MyAppName} Folder"; Filename: "{app}"; Tasks: desktopicon
 Name: "{commondesktop}\{#MyAppName} Launcher"; Filename: "{app}\ArchipelagoLauncher.exe"; Tasks: desktopicon
@@ -181,6 +186,7 @@ Name: "{commondesktop}\{#MyAppName} Kingdom Hearts 2 Client"; Filename: "{app}\A
 Name: "{commondesktop}\{#MyAppName} Link's Awakening Client"; Filename: "{app}\ArchipelagoLinksAwakeningClient.exe"; Tasks: desktopicon; Components: client/ladx
 Name: "{commondesktop}\{#MyAppName} Adventure Client"; Filename: "{app}\ArchipelagoAdventureClient.exe"; Tasks: desktopicon; Components: client/advn
 Name: "{commondesktop}\{#MyAppName} Undertale Client"; Filename: "{app}\ArchipelagoUndertaleClient.exe"; Tasks: desktopicon; Components: client/ut
+Name: "{commondesktop}\{#MyAppName} Wario Land 4 Client"; Filename: "{app}\ArchipelagoWL4Client.exe"; Tasks: desktopicon; Components: client/wl4
 
 [Run]
 
@@ -282,6 +288,11 @@ Root: HKCR; Subkey: "{#MyAppName}advnpatch";                     ValueData: "Arc
 Root: HKCR; Subkey: "{#MyAppName}advnpatch\DefaultIcon";         ValueData: "{app}\ArchipelagoAdventureClient.exe,0";                           ValueType: string;  ValueName: ""; Components: client/advn
 Root: HKCR; Subkey: "{#MyAppName}advnpatch\shell\open\command";  ValueData: """{app}\ArchipelagoAdventureClient.exe"" ""%1""";                  ValueType: string;  ValueName: ""; Components: client/advn
 
+Root: HKCR; Subkey: ".apwl4";                                    ValueData: "{#MyAppName}wl4patch";           Flags: uninsdeletevalue; ValueType: string;  ValueName: ""; Components: client/wl4
+Root: HKCR; Subkey: "{#MyAppName}wl4patch";                      ValueData: "Archipelago Wario Land 4 Patch"; Flags: uninsdeletekey;   ValueType: string;  ValueName: ""; Components: client/wl4
+Root: HKCR; Subkey: "{#MyAppName}wl4patch\DefaultIcon";          ValueData: "{app}\ArchipelagoWL4Client.exe,0";                        ValueType: string;  ValueName: ""; Components: client/wl4
+Root: HKCR; Subkey: "{#MyAppName}wl4patch\shell\open\command";   ValueData: """{app}\ArchipelagoWL4Client.exe"" ""%1""";               ValueType: string;  ValueName: ""; Components: client/wl4
+
 Root: HKCR; Subkey: ".archipelago";                              ValueData: "{#MyAppName}multidata";        Flags: uninsdeletevalue; ValueType: string;  ValueName: ""; Components: server
 Root: HKCR; Subkey: "{#MyAppName}multidata";                     ValueData: "Archipelago Server Data";       Flags: uninsdeletekey;  ValueType: string;  ValueName: ""; Components: server
 Root: HKCR; Subkey: "{#MyAppName}multidata\DefaultIcon";         ValueData: "{app}\ArchipelagoServer.exe,0";                         ValueType: string;  ValueName: ""; Components: server
@@ -360,6 +371,9 @@ var TLoZROMFilePage:  TInputFileWizardPage;
 
 var advnrom: string;
 var AdvnROMFilePage:  TInputFileWizardPage;
+
+var wl4rom: string;
+var WL4ROMFilePage: TInputFileWizardPage;
 
 function GetSNESMD5OfFile(const rom: string): string;
 var data: AnsiString;
@@ -589,6 +603,8 @@ begin
     Result := not (TLoZROMFilePage.Values[0] = '')
   else if (assigned(AdvnROMFilePage)) and (CurPageID = AdvnROMFilePage.ID) then
     Result := not (AdvnROMFilePage.Values[0] = '')
+  else if (assigned(WL4ROMFilePage)) and (CurPageID = WL4ROMFilePage.ID) then
+    Result := not (WL4ROMFilePage.Values[0] = '')
   else
     Result := True;
 end;
@@ -817,6 +833,22 @@ begin
     Result := '';
  end;
 
+function GetWL4ROMPath(Param: string): string;
+begin
+  if Length(wl4rom) > 0 then
+    Result := wl4
+  else if Assigned(WL4ROMFilePage) then
+    begin
+      R := CompareStr(GetMD5OfFile(WL4ROMFilePage.Values[0]), '5fe47355a33e3fabec2a1607af88a404')
+      if R <> 0 then
+        MsgBox('Wario Land 4 ROM validation failed. Very likely wrong file.', mbInformation, MB_OK);
+
+      Result := WL4ROMFilePage.Values[0]
+    end
+  else
+    Result := '';
+ end;
+
 procedure InitializeWizard();
 begin
   AddOoTRomPage();
@@ -872,6 +904,10 @@ begin
   advnrom := CheckSMSRom('ADVNTURE.BIN', '157bddb7192754a45372be196797f284');
   if Length(advnrom) = 0 then
     AdvnROMFilePage:= AddA26Page('ADVNTURE.BIN');
+
+  wl4rom := CheckRom('Wario Land 4 (UE) [!].gba', '5fe47355a33e3fabec2a1607af88a404');
+  if Length(wl4rom) = 0 then
+    WL4ROMFilePage:= AddGBARomPage('Wario Land 4 (UE) [!].gba');
 end;
 
 
@@ -906,4 +942,6 @@ begin
     Result := not (WizardIsComponentSelected('generator/tloz') or WizardIsComponentSelected('client/tloz'));
   if (assigned(AdvnROMFilePage)) and (PageID = AdvnROMFilePage.ID) then
     Result := not (WizardIsComponentSelected('client/advn'));
+  if (assigned(WL4ROMFilePage)) and (PageID = WL4ROMFilePage.ID) then
+    Result := not (WizardIsComponentSelected('generator/wl4') or WizardIsComponentSelected('client/wl4'));
 end;

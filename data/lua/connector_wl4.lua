@@ -37,10 +37,10 @@ local received_item_count_addr = gba_wram_start + 0xA76
 
 local vanilla_unused_offset = gba_wram_start + 0x6280
 
-local incoming_item_addr = gba_wram_start + 0x6281
-local incoming_item_exists_addr = gba_wram_start + 0x6282
-local incoming_player_addr = gba_wram_start + 0x6283
-local death_link_addr = gba_wram_start + 0x6296
+local incoming_item_addr = gba_wram_start + 0x6280
+local incoming_item_exists_addr = gba_wram_start + 0x6281
+local incoming_player_addr = gba_wram_start + 0x6282
+local death_link_addr = gba_wram_start + 0x6297
 
 local player_name_addr = gba_rom_start + 0x78F97C
 
@@ -134,7 +134,7 @@ function item_receivable()
     local mode, state = get_current_game_mode()
     local inLevel = mode == 2 and state == 2
     local warioStopped = inLevel and memory.read_u16_le(wario_stop_flag) ~= 0
-    local itemQueued = memory.read_u8(incoming_item_exists_addr) ~= 0x00 
+    local itemQueued = memory.read_u8(incoming_item_exists_addr) ~= 0x00
     -- Safe to receive an item if the scene is normal, Wario can move, and no item is already queued
     return InSafeState() and not (warioStopped or itemQueued)
 end

@@ -9,6 +9,7 @@
 *.apmc
 *.apz5
 *.aptloz
+*.apemerald
 *.apwl4
 *.pyc
 *.pyd
@@ -16,6 +17,7 @@
 *.z64
 *.n64
 *.nes
+*.smc
 *.sms
 *.gb
 *.gbc
